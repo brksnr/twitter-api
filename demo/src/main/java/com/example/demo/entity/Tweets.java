@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 
+import com.example.demo.entity.user.User;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
@@ -18,6 +19,12 @@ public class Tweets {
     private String Content;
     @Column(name = "created_at")
     private Timestamp createdAt;
+
+
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
 
     @OneToMany(mappedBy = "tweets", cascade = CascadeType.ALL, orphanRemoval = true)

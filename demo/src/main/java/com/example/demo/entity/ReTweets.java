@@ -5,7 +5,7 @@ import com.example.demo.entity.user.User;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "comments", schema = "twitter")
+@Table(name = "retweets", schema = "twitter")
 public class ReTweets {
 
     @Id
