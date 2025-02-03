@@ -3,10 +3,15 @@ package com.example.demo.entity;
 
 import com.example.demo.entity.user.User;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 import java.sql.Timestamp;
 import java.util.List;
 
+@AllArgsConstructor
+@Data
 @Entity
 @Table(name = "tweets", schema = "twitter")
 public class Tweets {
@@ -15,8 +20,11 @@ public class Tweets {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+
     @Column(name = "content")
+    @Size(min = 20, max = 280, message = "Tweet 20 ile 280 karakter arasında olmalıdır.")
     private String Content;
+
     @Column(name = "created_at")
     private Timestamp createdAt;
 
