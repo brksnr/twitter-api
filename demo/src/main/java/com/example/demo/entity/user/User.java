@@ -1,5 +1,9 @@
 package com.example.demo.entity.user;
 
+import com.example.demo.entity.Comments;
+import com.example.demo.entity.Likes;
+import com.example.demo.entity.ReTweets;
+import com.example.demo.entity.Tweets;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,6 +25,18 @@ public class User implements UserDetails {
     private String email;
     @Column(name = "password")
     private String password;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Tweets> tweets;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Likes> likes;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ReTweets> retweets;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comments> comments;
 
 
 

@@ -13,6 +13,9 @@ public class Comments {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "comment", nullable = false)
+    private String comment;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -20,4 +23,5 @@ public class Comments {
     @ManyToOne
     @JoinColumn(name = "tweet_id", nullable = false)
     private Tweets tweets;
+
 }
