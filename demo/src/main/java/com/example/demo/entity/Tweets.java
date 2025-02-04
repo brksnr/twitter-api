@@ -2,6 +2,7 @@ package com.example.demo.entity;
 
 
 import com.example.demo.entity.user.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -30,7 +31,7 @@ public class Tweets {
     private Timestamp createdAt;
 
 
-
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

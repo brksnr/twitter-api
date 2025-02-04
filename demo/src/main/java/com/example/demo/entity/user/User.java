@@ -4,6 +4,7 @@ import com.example.demo.entity.Comments;
 import com.example.demo.entity.Likes;
 import com.example.demo.entity.ReTweets;
 import com.example.demo.entity.Tweets;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -31,6 +32,8 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
+
+    @JsonManagedReference
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Tweets> tweets;
 
@@ -107,5 +110,37 @@ public class User implements UserDetails {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public List<Tweets> getTweets() {
+        return tweets;
+    }
+
+    public void setTweets(List<Tweets> tweets) {
+        this.tweets = tweets;
+    }
+
+    public List<Likes> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(List<Likes> likes) {
+        this.likes = likes;
+    }
+
+    public List<ReTweets> getRetweets() {
+        return retweets;
+    }
+
+    public void setRetweets(List<ReTweets> retweets) {
+        this.retweets = retweets;
+    }
+
+    public List<Comments> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comments> comments) {
+        this.comments = comments;
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Service
 public class TweetService {
@@ -34,4 +35,12 @@ public class TweetService {
 
         return tweetRepository.save(tweet);
     }
+
+    public List<Tweets> getAllTweetsById(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ApiException("Kullanıcı bulunamadı!", HttpStatus.NOT_FOUND));
+
+        return user.getTweets();
+    }
+
 }

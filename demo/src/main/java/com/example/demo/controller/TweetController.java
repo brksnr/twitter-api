@@ -5,10 +5,9 @@ import com.example.demo.entity.Tweets;
 import com.example.demo.service.TweetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/tweets")
@@ -26,4 +25,10 @@ public class TweetController {
         Tweets createdTweet = tweetService.createTweet(request.content(), request.userId());
         return ResponseEntity.ok(createdTweet);
     }
+
+    @GetMapping("/{userId}")
+    public List<Tweets> getAllTweetsById(@PathVariable Long userId) {
+        return tweetService.getAllTweetsById(userId);
+    }
+
 }
