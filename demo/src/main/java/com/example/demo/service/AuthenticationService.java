@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthenticationService {
 
-    private UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public AuthenticationService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
@@ -20,8 +20,13 @@ public class AuthenticationService {
     }
 
     public User register(String userName, String email, String password){
+        if(userRepository.findUserByEmail(email).isPresent()){
+            throw new RuntimeException("email alınmış!");
+        }
+        if(userRepository.findUserByUserName(userName).isPresent()){
+            throw new RuntimeException("kullanıcı adı alınmış!");
+        }
         String encodedPassword = passwordEncoder.encode(password);
-
         User user = new User();
         user.setUserName(userName);
         user.setEmail(email);
@@ -29,4 +34,5 @@ public class AuthenticationService {
 
         return userRepository.save(user);
     }
+
 }
