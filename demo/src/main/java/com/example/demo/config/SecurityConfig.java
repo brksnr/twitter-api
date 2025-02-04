@@ -33,10 +33,16 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        return httpSecurity.csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
-                .formLogin(Customizer.withDefaults())
-                .httpBasic(Customizer.withDefaults())
+        return httpSecurity
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/register", "/login").permitAll() // Açık bırakılan endpointler
+                        .anyRequest().authenticated() // Diğerleri authentication gerektirir
+                )
+                .formLogin(form -> form.disable()) // Spring'in login formunu kapat
+                .httpBasic(Customizer.withDefaults()) // İsteğe bağlı, token bazlı auth kullanıyorsan kapatabilirsin
                 .build();
     }
+
+
 }

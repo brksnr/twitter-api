@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class AuthenticationService {
 
@@ -35,6 +37,18 @@ public class AuthenticationService {
         user.setPassword(encodedPassword);
 
         return userRepository.save(user);
+    }
+
+    public User login(String email, String password){
+        Optional<User> userOptional = userRepository.findUserByEmail(email);
+        if(!userOptional.isPresent()){
+            throw new ApiException("Email veye Şifre hatalı!", HttpStatus.BAD_REQUEST);
+        }
+        User user = userOptional.get();
+        if(!passwordEncoder.matches(password, user.getPassword())){
+            throw new ApiException("Email veye Şifre hatalı!", HttpStatus.BAD_REQUEST);
+        }
+        return user;
     }
 
 }
