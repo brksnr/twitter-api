@@ -36,11 +36,11 @@ public class SecurityConfig {
         return httpSecurity
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/register", "/login").permitAll() // Açık bırakılan endpointler
-                        .anyRequest().authenticated() // Diğerleri authentication gerektirir
+                        .requestMatchers("/register", "/login" ,"/tweets/create").permitAll()
+                        .anyRequest().authenticated()
                 )
-                .formLogin(form -> form.disable()) // Spring'in login formunu kapat
-                .httpBasic(Customizer.withDefaults()) // İsteğe bağlı, token bazlı auth kullanıyorsan kapatabilirsin
+                .formLogin(form -> form.disable())
+                .httpBasic(Customizer.withDefaults())
                 .build();
     }
 

@@ -42,7 +42,7 @@ public class AuthenticationService {
     public User login(String email, String password){
         Optional<User> userOptional = userRepository.findUserByEmail(email);
         if(!userOptional.isPresent()){
-            throw new ApiException("Email veye Şifre hatalı!", HttpStatus.BAD_REQUEST);
+            throw new ApiException("Bilgilere ait kullanıcı bulunamadı!", HttpStatus.BAD_REQUEST);
         }
         User user = userOptional.get();
         if(!passwordEncoder.matches(password, user.getPassword())){

@@ -51,7 +51,7 @@ public class AuthController {
             LoginResponse loginResponse = new LoginResponse(loginRequest.email(), token);
             return ResponseEntity.ok(loginResponse);
         } else {
-            throw new ApiException("adasas", HttpStatus.BAD_REQUEST);
+            throw new ApiException("Kullanıcı mevcut değil!", HttpStatus.BAD_REQUEST);
         }
     }
 }
