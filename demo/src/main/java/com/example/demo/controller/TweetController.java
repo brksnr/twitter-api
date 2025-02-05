@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.PostTweetRequest;
+import com.example.demo.dto.UpdateTweet;
 import com.example.demo.entity.Tweets;
 import com.example.demo.service.TweetService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,13 @@ public class TweetController {
     public ResponseEntity<String> deleteTweet(@PathVariable Long userId, @PathVariable Long tweetId) {
         tweetService.deleteTweetById(userId, tweetId);
         return ResponseEntity.ok("Tweet başarıyla silindi!");
+    }
+
+    @PutMapping("/user/{userId}/upadteTweet/{tweetId}")
+    public ResponseEntity<Tweets> updateTweet(@PathVariable  Long userId, @PathVariable Long tweetId, @RequestBody UpdateTweet newContent){
+
+        Tweets updatedTweet = tweetService.updateTweet(userId, tweetId, newContent.content());
+        return ResponseEntity.ok(updatedTweet);
     }
 
 

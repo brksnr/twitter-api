@@ -25,6 +25,7 @@ public class TweetService {
         this.userRepository = userRepository;
     }
 
+
     public Tweets createTweet(String content, Long userId){
         User user = userRepository.findById(userId)
                 .orElseThrow(()-> new ApiException("Kullanıcı bulunamadı!", HttpStatus.NOT_FOUND));
@@ -60,6 +61,21 @@ public class TweetService {
             throw new ApiException("Bu tweeti silme yetkiniz yok!", HttpStatus.FORBIDDEN);
         }
         tweetRepository.delete(tweet);
+    }
+
+    public Tweets updateTweet(Long userId, Long tweetId, String newContent){
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ApiException("İlgili kullanıcı bulunamadı.", HttpStatus.NOT_FOUND));
+
+        Tweets tweet = tweetRepository.findById(tweetId)
+                .orElseThrow(() -> new ApiException("ilgili tweet bulunamadı.", HttpStatus.NOT_FOUND));
+
+        if(!user.getId().equals(tweet.getUser().getId())){
+            throw new ApiException("Bu tweeti değiştirme yetkiniz yok!", HttpStatus.FORBIDDEN);
+        }
+
+        tweet.setContent(newContent);
+        throw new ApiException("Tweet başarıyla güncellendi!", HttpStatus.OK);
     }
 
 }
