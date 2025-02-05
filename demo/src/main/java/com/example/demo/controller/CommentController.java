@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.CommentRequest;
+import com.example.demo.dto.commentDtos.CommentRequest;
+import com.example.demo.dto.commentDtos.UpdateComment;
 import com.example.demo.entity.Comments;
 import com.example.demo.service.CommentService;
 import com.example.demo.service.TweetService;
@@ -37,5 +38,9 @@ public class CommentController {
            return  ResponseEntity.ok("Yorum başarıyla silindi!");
     }
 
-
+    @PutMapping("/user/{userId}/tweet/{tweetId}/comment/{commentId}")
+    public ResponseEntity<Comments> updateComment(@PathVariable Long userId, @PathVariable Long tweetId, @PathVariable Long commentId, @RequestBody UpdateComment request){
+        Comments updatedComment =  commentService.updateComment(userId,tweetId,commentId, request.comment());
+        return ResponseEntity.ok(updatedComment);
+    }
 }

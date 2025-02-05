@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.PostTweetRequest;
-import com.example.demo.dto.UpdateTweet;
+import com.example.demo.dto.tweetDtos.PostTweetRequest;
+import com.example.demo.dto.tweetDtos.UpdateTweet;
 import com.example.demo.entity.Tweets;
 import com.example.demo.service.TweetService;
 import org.springframework.beans.factory.annotation.Autowired;
