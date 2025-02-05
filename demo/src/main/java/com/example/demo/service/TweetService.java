@@ -75,7 +75,8 @@ public class TweetService {
         }
 
         tweet.setContent(newContent);
-        throw new ApiException("Tweet başarıyla güncellendi!", HttpStatus.OK);
+
+        return tweetRepository.save(tweet);
     }
 
 }

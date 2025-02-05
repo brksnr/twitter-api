@@ -6,9 +6,10 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @AllArgsConstructor
-@Data
 @Entity
 @Table(name = "comments", schema = "twitter")
 public class Comments {
@@ -30,4 +31,36 @@ public class Comments {
     @JoinColumn(name = "tweet_id", nullable = false)
     private Tweets tweets;
 
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Tweets getTweets() {
+        return tweets;
+    }
+
+    public void setTweets(Tweets tweets) {
+        this.tweets = tweets;
+    }
 }
