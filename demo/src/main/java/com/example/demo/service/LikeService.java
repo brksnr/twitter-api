@@ -12,6 +12,8 @@ import org.springframework.data.relational.core.sql.Like;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class LikeService {
 
@@ -33,10 +35,28 @@ public class LikeService {
         Tweets tweet = tweetRepository.findById(tweetId)
                 .orElseThrow(() -> new ApiException("ilgili tweet bulunamadı.", HttpStatus.NOT_FOUND));
 
+        Optional<Likes> existingLike = likeRepository.findByUserAndTweets(user, tweet);
+        if (existingLike.isPresent()) {
+            throw new ApiException("Bu tweeti daha önce beğendiniz.", HttpStatus.BAD_REQUEST);
+        }
+
         Likes likes = new Likes();
         likes.setUser(user);
         likes.setTweets(tweet);
 
-        return likes;
+        return likeRepository.save(likes);
+    }
+
+    public void deleteLike(Long tweetId, Long userId){
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ApiException("İlgili kullanıcı bulunamadı.", HttpStatus.NOT_FOUND));
+
+        Tweets tweet = tweetRepository.findById(tweetId)
+                .orElseThrow(() -> new ApiException("ilgili tweet bulunamadı.", HttpStatus.NOT_FOUND));
+
+        Likes existingLike = likeRepository.findByUserAndTweets(user, tweet)
+                .orElseThrow(() -> new ApiException("Bu tweeti beğenmediğiniz için beğeniyi geri alamazsınız!", HttpStatus.BAD_REQUEST));
+
+        likeRepository.delete(existingLike);
     }
 }
