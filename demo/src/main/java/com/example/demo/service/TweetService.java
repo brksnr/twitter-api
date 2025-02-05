@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TweetService {
@@ -41,6 +42,24 @@ public class TweetService {
                 .orElseThrow(() -> new ApiException("Kullanıcı bulunamadı!", HttpStatus.NOT_FOUND));
 
         return user.getTweets();
+    }
+
+    public Tweets getTweetWithInfo(Long tweetId) {
+        return tweetRepository.findById(tweetId)
+                .orElseThrow(() -> new ApiException("İlgili tweet bulunamadı.", HttpStatus.NOT_FOUND));
+    }
+
+    public void deleteTweetById(Long userId, Long tweetId){
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ApiException("İlgili kullanıcı bulunamadı.", HttpStatus.NOT_FOUND));
+
+        Tweets tweet = tweetRepository.findById(tweetId)
+                .orElseThrow(() -> new ApiException("ilgili tweet bulunamadı.", HttpStatus.NOT_FOUND));
+
+        if(!user.getId().equals(tweet.getUser().getId())){
+            throw new ApiException("Bu tweeti silme yetkiniz yok!", HttpStatus.FORBIDDEN);
+        }
+        tweetRepository.delete(tweet);
     }
 
 }
