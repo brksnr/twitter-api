@@ -2,6 +2,9 @@ package com.example.demo.entity;
 
 
 import com.example.demo.entity.user.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -23,13 +26,16 @@ public class Comments {
     @Size(min = 20, max = 280, message = "Yorum 20 ile 280 karakter arasında olmalıdır.")
     private String comment;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "tweet_id", nullable = false)
     private Tweets tweets;
+
 
 
     public Long getId() {

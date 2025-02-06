@@ -4,6 +4,7 @@ package com.example.demo.entity;
 import com.example.demo.entity.user.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -32,22 +33,23 @@ public class Tweets {
     private Timestamp createdAt;
 
 
-    @JsonIgnoreProperties({"password", "tweets","likes","retweets","comments","enabled","credentialsNonExpired","accountNonExpired","authorities","accountNonLocked","username"})
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-
+    @JsonManagedReference
     @OneToMany(mappedBy = "tweets", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Likes> likes;
 
-
+    @JsonManagedReference
     @OneToMany(mappedBy = "tweets", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReTweets> retweets;
 
-
+    @JsonManagedReference
     @OneToMany(mappedBy = "tweets", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comments> comments;
+
 
 
     public Long getId() {

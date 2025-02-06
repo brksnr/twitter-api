@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ReTweetService {
 
@@ -31,6 +33,12 @@ public class ReTweetService {
 
         Tweets tweet = tweetRepository.findById(tweetId)
                 .orElseThrow(() -> new ApiException("Tweet bulunamadı!", HttpStatus.NOT_FOUND));
+
+        Optional<ReTweets> reTweet = reTweetRepository.findByUserAndTweets(user,tweet);
+
+        if(reTweet.isPresent()){
+            throw new ApiException("Bu tweeti daha önce retweetlediniz.", HttpStatus.BAD_REQUEST);
+        }
 
         ReTweets reTweets = new ReTweets();
         reTweets.setTweets(tweet);

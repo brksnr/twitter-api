@@ -2,6 +2,8 @@ package com.example.demo.entity;
 
 
 import com.example.demo.entity.user.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,13 +20,17 @@ public class Likes {
     @Column(name = "id")
     private Long id;
 
+
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "tweet_id", nullable = false)
     private Tweets tweets;
+
 
 
     public Long getId() {
