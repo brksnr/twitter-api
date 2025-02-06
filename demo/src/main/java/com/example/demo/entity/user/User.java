@@ -31,6 +31,8 @@ public class User implements UserDetails {
     private String email;
     @Column(name = "password")
     private String password;
+    @Column(name = "userImg")
+    private String userImg;
 
 
     @JsonManagedReference
@@ -104,6 +106,12 @@ public class User implements UserDetails {
         this.password = password;
     }
 
+    public String getUserImg() {
+        return userImg;
+    }
+    public void setUserImg(String userImg) {
+        this.userImg = userImg;
+    }
     public Long getId() {
         return id;
     }

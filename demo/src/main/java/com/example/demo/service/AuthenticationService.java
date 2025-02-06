@@ -6,8 +6,11 @@ import com.example.demo.exceptions.ApiException;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.util.Optional;
 
@@ -16,11 +19,13 @@ public class AuthenticationService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
     @Autowired
-    public AuthenticationService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public AuthenticationService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
     }
 
     public User register(String userName, String email, String password){
@@ -49,6 +54,18 @@ public class AuthenticationService {
             throw new ApiException("Email veye Şifre hatalı!", HttpStatus.BAD_REQUEST);
         }
         return user;
+    }
+
+    @GetMapping("/verify")
+    public ResponseEntity<String> verifyToken(@RequestHeader("Authorization") String authHeader) {
+        String token = authHeader.substring(7);
+
+        if (jwtService.validateToken(token)) {
+            String username = jwtService.extractUsername(token);
+            return ResponseEntity.ok("Token valid for user: " + username);
+        } else {
+            return ResponseEntity.status(401).body("Invalid token");
+        }
     }
 
 }
