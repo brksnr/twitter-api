@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.tweetDtos.PostTweetRequest;
+import com.example.demo.dto.tweetDtos.TweetDto;
 import com.example.demo.dto.tweetDtos.UpdateTweet;
 import com.example.demo.entity.Tweets;
 import com.example.demo.service.TweetService;
@@ -28,8 +29,8 @@ public class TweetController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Tweets>> getAllTweets() {
-        List<Tweets> tweets = tweetService.getAllTweets();
+    public ResponseEntity<List<TweetDto>> getAllTweets() {
+        List<TweetDto> tweets = tweetService.getAllTweets();
         return ResponseEntity.ok(tweets);
     }
 

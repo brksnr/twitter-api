@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.tweetDtos.TweetDto;
+import com.example.demo.dto.tweetDtos.TweetUserDto;
 import com.example.demo.entity.Tweets;
 import com.example.demo.entity.user.User;
 import com.example.demo.exceptions.ApiException;
@@ -10,8 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TweetService {
@@ -38,9 +42,41 @@ public class TweetService {
         return tweetRepository.save(tweet);
     }
 
-    public List<Tweets> getAllTweets() {
-        return tweetRepository.findAll();
+    public List<TweetDto> getAllTweets() {
+        List<Tweets> tweets = tweetRepository.findAll();
+        List<TweetDto> tweetDtos = new ArrayList<>();
+
+        for (Tweets tweet : tweets) {
+            TweetUserDto userDto = new TweetUserDto(tweet.getUser().getEmail(), tweet.getUser().getUsername());
+
+            List<String> likeEmails = tweet.getLikes().stream()
+                    .map(like -> like.getUser().getEmail())
+                    .collect(Collectors.toList());
+
+            List<String> retweetEmails = tweet.getRetweets().stream()
+                    .map(retweet -> retweet.getUser().getEmail())
+                    .collect(Collectors.toList());
+
+            List<String> commentContents = tweet.getComments().stream()
+                    .map(comment -> comment.getComment())
+                    .collect(Collectors.toList());
+
+            TweetDto tweetDto = new TweetDto(
+                    tweet.getId(),
+                    tweet.getContent(),
+                    userDto,
+                    tweet.getCreatedAt(),
+                    likeEmails,
+                    retweetEmails,
+                    commentContents
+            );
+
+            tweetDtos.add(tweetDto);
+        }
+
+        return tweetDtos;
     }
+
 
     public List<Tweets> getAllTweetsById(Long userId) {
         User user = userRepository.findById(userId)

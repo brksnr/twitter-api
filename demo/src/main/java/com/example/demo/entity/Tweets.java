@@ -27,7 +27,7 @@ public class Tweets {
 
     @Column(name = "content")
     @Size(min = 20, max = 280, message = "Tweet 20 ile 280 karakter arasında olmalıdır.")
-    private String Content;
+    private String content;
 
     @Column(name = "created_at")
     private Timestamp createdAt;
@@ -61,11 +61,11 @@ public class Tweets {
     }
 
     public String getContent() {
-        return Content;
+        return content;
     }
 
     public void setContent(String content) {
-        Content = content;
+        content = content;
     }
 
     public Timestamp getCreatedAt() {
