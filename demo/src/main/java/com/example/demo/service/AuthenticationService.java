@@ -28,13 +28,20 @@ public class AuthenticationService {
         this.jwtService = jwtService;
     }
 
-    public User register(String userName, String email, String password){
-        if(userRepository.findUserByEmail(email).isPresent()){
+    public User register(String userName, String email, String password) {
+        if (userName == null || userName.trim().isEmpty() ||
+                email == null || email.trim().isEmpty() ||
+                password == null || password.trim().isEmpty()) {
+            throw new ApiException("Tüm alanları doldurunuz!", HttpStatus.BAD_REQUEST);
+        }
+
+        if (userRepository.findUserByEmail(email).isPresent()) {
             throw new ApiException("Bu email başka bir kullanıcı tarafından alınmış!", HttpStatus.BAD_REQUEST);
         }
-        if(userRepository.findUserByUserName(userName).isPresent()){
+        if (userRepository.findUserByUserName(userName).isPresent()) {
             throw new ApiException("Bu username başka bir kullanıcı tarafından alınmış!", HttpStatus.BAD_REQUEST);
         }
+
         String encodedPassword = passwordEncoder.encode(password);
         User user = new User();
         user.setUserName(userName);
@@ -43,6 +50,7 @@ public class AuthenticationService {
 
         return userRepository.save(user);
     }
+
 
     public User login(String email, String password){
         Optional<User> userOptional = userRepository.findUserByEmail(email);
