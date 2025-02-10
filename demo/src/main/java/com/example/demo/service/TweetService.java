@@ -38,6 +38,10 @@ public class TweetService {
         return tweetRepository.save(tweet);
     }
 
+    public List<Tweets> getAllTweets() {
+        return tweetRepository.findAll();
+    }
+
     public List<Tweets> getAllTweetsById(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ApiException("Kullanıcı bulunamadı!", HttpStatus.NOT_FOUND));

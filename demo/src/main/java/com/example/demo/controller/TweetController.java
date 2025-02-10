@@ -27,6 +27,12 @@ public class TweetController {
         return ResponseEntity.ok(createdTweet);
     }
 
+    @GetMapping
+    public ResponseEntity<List<Tweets>> getAllTweets() {
+        List<Tweets> tweets = tweetService.getAllTweets();
+        return ResponseEntity.ok(tweets);
+    }
+
     @GetMapping("/{userId}")
     public List<Tweets> getAllTweetsById(@PathVariable Long userId) {
         return tweetService.getAllTweetsById(userId);
