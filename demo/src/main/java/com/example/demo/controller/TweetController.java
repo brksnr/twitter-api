@@ -39,6 +39,8 @@ public class TweetController {
         return tweetService.getAllTweetsById(userId);
     }
 
+
+
     @GetMapping("/tweet/{tweetId}")
     public ResponseEntity<Tweets> getTweetWithInfo(@PathVariable Long tweetId) {
         Tweets tweet = tweetService.getTweetWithInfo(tweetId);

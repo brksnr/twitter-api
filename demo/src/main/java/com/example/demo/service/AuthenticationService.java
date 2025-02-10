@@ -62,6 +62,7 @@ public class AuthenticationService {
             throw new ApiException("Email veye Şifre hatalı!", HttpStatus.BAD_REQUEST);
         }
         return user;
+
     }
 
     @GetMapping("/verify")

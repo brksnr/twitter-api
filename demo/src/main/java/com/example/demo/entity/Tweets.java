@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,6 +27,7 @@ public class Tweets {
     private Long id;
 
     @Column(name = "content")
+    @NotNull
     @Size(min = 20, max = 280, message = "Tweet 20 ile 280 karakter arasında olmalıdır.")
     private String content;
 

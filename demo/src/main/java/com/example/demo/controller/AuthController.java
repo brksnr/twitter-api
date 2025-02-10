@@ -48,10 +48,11 @@ public class AuthController {
         if(user != null){
             String token = jwtService.generateToken(user.getEmail());
 
-            LoginResponse loginResponse = new LoginResponse(loginRequest.email(), token);
+            LoginResponse loginResponse = new LoginResponse(loginRequest.email(), token, user.getId());
             return ResponseEntity.ok(loginResponse);
         } else {
             throw new ApiException("Kullanıcı mevcut değil!", HttpStatus.BAD_REQUEST);
         }
     }
+
 }
