@@ -67,7 +67,7 @@ public class Tweets {
     }
 
     public void setContent(String content) {
-        content = content;
+        this.content = content;
     }
 
     public Timestamp getCreatedAt() {

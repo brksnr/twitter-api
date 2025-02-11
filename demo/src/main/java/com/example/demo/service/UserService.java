@@ -1,7 +1,10 @@
 package com.example.demo.service;
 
+import com.example.demo.exceptions.ApiException;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,8 +24,9 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findUserByEmail(username)
                 .orElseThrow(() -> {
-                    System.out.println("Kullanıcı bilgileri geçerli değil!");
-                    throw new UsernameNotFoundException("Kullanıcı bilgileri geçerli değil!");
+                    throw new ApiException("Kullanıcı bilgileri geçerli değil!", HttpStatus.NOT_FOUND);
                 });
     }
+
+
 }
