@@ -1,14 +1,16 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.user.User;
 import com.example.demo.exceptions.ApiException;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -28,5 +30,13 @@ public class UserService implements UserDetailsService {
                 });
     }
 
+    public User getUserById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new ApiException("Kullanıcı bulunamadı!", HttpStatus.NOT_FOUND));
+    }
+
+    public List<User> GetAllUsers(){
+        return userRepository.findAll();
+    }
 
 }
