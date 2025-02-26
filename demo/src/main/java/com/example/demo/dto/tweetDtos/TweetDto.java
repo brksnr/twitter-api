@@ -1,7 +1,10 @@
 package com.example.demo.dto.tweetDtos;
 
+import lombok.NoArgsConstructor;
+
 import java.sql.Timestamp;
 import java.util.List;
+
 
 public class TweetDto {
     private Long id;
@@ -12,6 +15,8 @@ public class TweetDto {
     private List<String> retweets;
     private List<String> comments;
 
+
+
     public TweetDto(Long id, String content, TweetUserDto user, Timestamp timestamp, List<String> likes, List<String> retweets, List<String> comments) {
         this.id = id;
         this.content = content;
@@ -20,6 +25,9 @@ public class TweetDto {
         this.retweets = retweets;
         this.comments = comments;
         this.timestamp = timestamp;
+    }
+
+    public TweetDto(Long id, String content, TweetUserDto userDto, Timestamp createdAt, List<String> commentContents) {
     }
 
     public Long getId() {

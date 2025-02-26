@@ -53,7 +53,7 @@ public class TweetController {
         return ResponseEntity.ok("Tweet başarıyla silindi!");
     }
 
-    @PutMapping("/user/{userId}/upadtetweet/{tweetId}")
+    @PutMapping("/user/{userId}/updatetweet/{tweetId}")
     public ResponseEntity<Tweets> updateTweet(@PathVariable  Long userId, @PathVariable Long tweetId, @RequestBody UpdateTweet newContent){
 
         Tweets updatedTweet = tweetService.updateTweet(userId, tweetId, newContent.content());

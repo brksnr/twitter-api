@@ -9,7 +9,7 @@ public class TweetUserDto {
         this.username = username;
     }
 
-    // Getter'lar ve Setter'lar
+
     public String getEmail() {
         return email;
     }
