@@ -35,7 +35,7 @@ public class Tweets {
     private Timestamp createdAt;
 
 
-    @JsonBackReference
+    @JsonIgnoreProperties({"likes", "retweets", "comments","password","userImg","tweets","enabled","accountNonLocked","authorities","credentialsNonExpired","accountNonExpired","userName"})
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

@@ -26,7 +26,7 @@ public class Comments {
     @Size(min = 20, max = 280, message = "Yorum 20 ile 280 karakter arasında olmalıdır.")
     private String comment;
 
-    @JsonBackReference
+    @JsonIgnoreProperties({"likes", "retweets", "comments","password","userImg","tweets","enabled","accountNonLocked","authorities","credentialsNonExpired","accountNonExpired","userName"})
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
