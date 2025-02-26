@@ -36,13 +36,10 @@ public class SecurityConfig {
         return httpSecurity
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-
                         .anyRequest().permitAll()
                 )
                 .formLogin(form -> form.disable())
                 .httpBasic(Customizer.withDefaults())
                 .build();
     }
-
-
 }
